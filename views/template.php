@@ -1,6 +1,6 @@
 <html ng-app="app">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-type" content="text/html; charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Sistema de Gestión V 1.0.0</title>
         <!--     Fonts and icons     -->
