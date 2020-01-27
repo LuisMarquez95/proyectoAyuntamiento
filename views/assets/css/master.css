@@ -1,0 +1,31 @@
+body{
+    background-color: whitesmoke;
+    width: 100%;
+}
+/*Estilos para el recuadro de login*/
+.cuadro-login{
+    margin-top: 50%;
+    margin-bottom: 50%;
+    margin-left: 10%;
+    background-color: lightseagreen;
+    width: 100%;
+   
+}
+.avatar{
+    margin-top: 5%;
+    margin-left: 40%;
+    margin-right: 50%;
+}
+.boton_login{
+    margin-left: 32%;
+    background-color: peru;
+    border-color: peru;
+    color:whitesmoke;
+    width: 30%;
+    height: 25%;
+}
+
+/*End de estilos de recuadro de Login*/
+
+
+/* Estilos para la colum*/

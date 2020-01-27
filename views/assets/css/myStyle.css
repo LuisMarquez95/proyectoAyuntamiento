@@ -1,0 +1,8 @@
+/*Estilos para Drag and Drop*/
+.containerFoto {
+    position: relative;
+    margin: 20px;
+    padding: 0px 10px;
+    height: auto;
+    border: 2px dashed #999;
+}
