@@ -41,8 +41,7 @@ class gestorUsuariosModel{
                 return false;
             }
         }catch( PDOException $Exception ) {
-            echo "Error";
-            echo $Exception;
+           return false;
         }
     }
 }

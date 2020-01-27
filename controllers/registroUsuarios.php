@@ -27,8 +27,8 @@ class gestorUsuarios {
             $imagen = $ruta;
             $respuesta = gestorUsuariosModel::guardarRegistroModel($datos, $imagen, 'empleados');
             $respuestaTwo = gestorUsuariosModel::registrarUsuarios($datos, $usuario, $pasword, 'usuarios');
-
-            echo $respuestaTwo;
+            
+            echo $respuesta;
 
         }
     }

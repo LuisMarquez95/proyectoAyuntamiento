@@ -84,9 +84,9 @@ angular.module('app', ['datatables'])
         || datos.depto == "" || datos.depto == null
         || datos.nivel == "" || datos.nivel == null){ // Metemos todo en un solo IF
             Swal.fire({
-                icon: 'error',
+                icon: 'success',
                 title: 'Oops...',
-                text: 'Debes especificar el Email!',
+                text: 'Debes de verificar los datos de tu formulario',
                 footer: '<a href>Soporte</a>'
               })
         }else{
@@ -116,7 +116,10 @@ angular.module('app', ['datatables'])
                     title: 'Listo',
                     text: 'Registro Exitoso'
                   })
+                  $('#registroModal').hide();
+                  window.location = 'adminusuarios';
             }
+            
             
         })
 
