@@ -12,15 +12,15 @@
                     <div class="form-row" style="padding-top: 7px;">
                         <div class="col">
                             <label for="nombre" style="margin-bottom: 18px;">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Nombre o Nombres" ng-model="datos.nombre" required pattern="[A-Za-z]">
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre o Nombres" ng-model="datos.nombre" required>
                         </div>
                         <div class="col">
                             <label for="ap" style="margin-bottom: 18px;">Apellido Paterno</label>
-                            <input type="text" class="form-control" id="ap" placeholder="Apellido Paterno" ng-model="datos.ap" required pattern="[a-zA-Za-z]">
+                            <input type="text" class="form-control" id="ap" placeholder="Apellido Paterno" ng-model="datos.ap" required >
                         </div>
                         <div class="col">
                             <label for="am" style="margin-bottom: 18px;">Apellido Materno</label>
-                            <input type="text" class="form-control" id="am" placeholder="Apellido Materno" ng-model="datos.am" required pattern="[a-zA-Za-z]">
+                            <input type="text" class="form-control" id="am" placeholder="Apellido Materno" ng-model="datos.am" required>
                         </div>
                     </div>
                     <div class="form-row" style="margin-top:36px;">

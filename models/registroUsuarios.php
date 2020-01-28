@@ -36,7 +36,9 @@ class gestorUsuariosModel{
         try{
             
             if($stmt->execute()){
-                return true;
+                $pdo = Conexion::conectar()->prepare("SELECT MAX(id) AS id FROM empleados");
+                $pdo->execute();
+                var_dump($pdo->fetch());
             }else{
                 return false;
             }
@@ -44,6 +46,10 @@ class gestorUsuariosModel{
            return false;
         }
     }
+
+    /*static public function getUsuarios($tabla){
+        $stmt = Conexion::contectar()->prepare("SELECT nombre_usuario, nivel_usuario, correo (SELECT Nombre_departamento FROM cat_departamentos WHERE id = us.departamento ) as depto FROM $tabla as us");
+    }*/
 }
 /* 	nombre_usuario	pass	nivel_usuario	correo	telefono	departamento	fecha_registro	intentos	fecha_ultimo_login	activo
 */

@@ -20,7 +20,7 @@ class gestorUsuarios {
             $ruta = '../../views/imgUsers/'.$aleatorio.".jpg";
             $origen = imagecreatefromjpeg($datos['foto']);
             #imagecrop() ---> recorta las imagenes al tamaño especificado
-            $destino = imagecrop($origen, ['x'=>0, 'y'=>0, 'width'=>400, 'height'=>300]);
+            $destino = imagecrop($origen, ['x'=>0, 'y'=>0, 'width'=>620, 'height'=>620]);
 
             imagejpeg($destino, $ruta);
 
@@ -29,7 +29,11 @@ class gestorUsuarios {
             $respuestaTwo = gestorUsuariosModel::registrarUsuarios($datos, $usuario, $pasword, 'usuarios');
             
             echo $respuesta;
-
+            die();
         }
     }
+    /*Mostrar registros de los usuarios*/
+    /*static public function getUsuariosRegistrados(){
+        $respuesta = gestorUsuariosModel::getUsuarios('usuarios');
+    }*/
 }

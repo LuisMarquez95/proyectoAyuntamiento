@@ -70,9 +70,7 @@ angular.module('app', ['datatables'])
         $scope.FotodeUsuario = imagen;
     });
     $scope.registrarUsuario = function(datos){
-
-        console.log(datos);
-
+        
         var datosnuevoUsuario = new FormData();
         if(datos.mail == "" || datos.mail == null ||
         datos.nombre == "" || datos.nombre == null

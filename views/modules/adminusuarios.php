@@ -42,7 +42,7 @@ include "views/modules/barra_menu.php";
                 </div>
             </div>
         </div>
-        <!-- DatatTable for data-->
+        <!-- DatatTable for data user registrer-->
         <div class="row">
             <div class="col-12">
                 <div class="card card-nav-tabs text-center">
@@ -54,16 +54,19 @@ include "views/modules/barra_menu.php";
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th>Name</th>
-                                    <th>Job Position</th>
-                                    <th>Since</th>
-                                    <th class="text-right">Salary</th>
-                                    <th class="text-right">Actions</th>
+                                    <th>Usuario</th>
+                                    <th>Departamento</th>
+                                    <th>Fecha de Registro</th>
+                                    <th class="text-right">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
         
                                 <tr>
+                                <?php
+                                   // $usuarios = new gestorUsuarios();
+                                   // $usuarios ->getUsuariosRegistrados(); 
+                                ?>
                                     <td class="text-center">2</td>
                                     <td>John Doe</td>
                                     <td>Design</td>
