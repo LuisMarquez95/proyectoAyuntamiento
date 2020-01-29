@@ -7,6 +7,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body">
                 <form ng-cloack ng-submit="registrarUsuario(datos)">
                     <div class="form-row" style="padding-top: 7px;">
@@ -72,9 +73,6 @@
                             
                         </div>
                     </div>
-                    
-               
-               
             </div> 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

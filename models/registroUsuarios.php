@@ -16,29 +16,30 @@ class gestorUsuariosModel{
         $stmt->bindParam(':foto', $imagen, PDO::PARAM_STR);
         $stmt->bindParam(':direccion', $datos['direccion'], PDO::PARAM_STR);
         if($stmt->execute()){
-            return true;
+            $pdo = Conexion::conectar()->prepare("SELECT MAX(id) AS id FROM empleados");
+            $pdo->execute();
+            return $pdo->fetch();
         }else{
             return false;
         }
         
     }
 
-    static public function registrarUsuarios($datos, $user, $pass, $tabla){
+    static public function registrarUsuarios($datos, $user, $pass, $id_empleado, $tabla){
         $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla 
-        (nombre_usuario, pass, nivel_usuario, correo, telefono, departamento, fecha_registro, intentos, fecha_ultimo_login, activo) 
-        VALUES (:user, :pas, :nivel, :correo, :telefono, :departamento, current_timestamp, 0, current_timestamp, 1)");
+        (nombre_usuario, pass, nivel_usuario, correo, telefono, departamento, fecha_registro, intentos, fecha_ultimo_login, activo, id_empleado) 
+        VALUES (:user, :pas, :nivel, :correo, :telefono, :departamento, current_timestamp, 0, current_timestamp, 1, :idemple)");
         $stmt->bindParam(':user', $user, PDO::PARAM_STR);
         $stmt->bindParam(':pas', $pass, PDO::PARAM_STR);
         $stmt->bindParam(':nivel', $datos['nivel'], PDO::PARAM_INT);
         $stmt->bindParam(':correo', $datos['correo'], PDO::PARAM_STR);
         $stmt->bindParam(':telefono', $datos['numero'], PDO::PARAM_STR);
         $stmt->bindParam(':departamento', $datos['departamento'], PDO::PARAM_STR);
+        $stmt->bindParam(':idemple', $id_empleado, PDO::PARAM_INT);
         try{
             
             if($stmt->execute()){
-                $pdo = Conexion::conectar()->prepare("SELECT MAX(id) AS id FROM empleados");
-                $pdo->execute();
-                var_dump($pdo->fetch());
+                return true;
             }else{
                 return false;
             }
@@ -47,8 +48,9 @@ class gestorUsuariosModel{
         }
     }
 
-    /*static public function getUsuarios($tabla){
-        $stmt = Conexion::contectar()->prepare("SELECT nombre_usuario, nivel_usuario, correo (SELECT Nombre_departamento FROM cat_departamentos WHERE id = us.departamento ) as depto FROM $tabla as us");
+   /* static public function getUsuarios($tabla){
+        $stmt = Conexion::contectar()->prepare("SELECT nombre_usuario, nivel_usuario, c
+        orreo (SELECT Nombre_departamento FROM cat_departamentos WHERE id = us.departamento ) as depto FROM $tabla as us");
     }*/
 }
 /* 	nombre_usuario	pass	nivel_usuario	correo	telefono	departamento	fecha_registro	intentos	fecha_ultimo_login	activo

@@ -19,7 +19,8 @@ include "views/modules/barra_menu.php";
                     <div class="card-body">
                         <h4 class="card-title">Registro de usuarios</h4>
                         <p class="card-text">Recuerda que es necesario llenar todos los campos</p>
-                        <a href="#0" class="btn btn-success" data-toggle="modal" data-target="#registroModal">Registrar</a>
+                        <a  class="btn btn-success" data-toggle="modal" data-target="#registroModal">Registrar</a>
+                        
                     </div>
                     <div class="card-footer text-muted">
                         ultimo registro 2 days ago
@@ -42,6 +43,7 @@ include "views/modules/barra_menu.php";
                 </div>
             </div>
         </div>
+        
         <!-- DatatTable for data user registrer-->
         <div class="row">
             <div class="col-12">
@@ -63,10 +65,7 @@ include "views/modules/barra_menu.php";
                             <tbody>
         
                                 <tr>
-                                <?php
-                                   // $usuarios = new gestorUsuarios();
-                                   // $usuarios ->getUsuariosRegistrados(); 
-                                ?>
+                               
                                     <td class="text-center">2</td>
                                     <td>John Doe</td>
                                     <td>Design</td>
@@ -96,5 +95,6 @@ include "views/modules/barra_menu.php";
 
         <!--Modal de registro del usuario -->
         <?php include_once 'views/modal/modal_registro_usuario.php' ?>
+        
     </div>
 </div>
