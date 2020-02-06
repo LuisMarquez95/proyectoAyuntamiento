@@ -6,3 +6,23 @@
     height: auto;
     border: 2px dashed #999;
 }
+.containerForm{
+   
+    position: absolute;
+    left: 39%;
+    /* top: 56%; */
+    /* height: 150px; */
+    width: 22%;
+    /* margin-left: -150px; */
+    margin-top: 17%;
+    background-color: #ffffff;
+    /* margin: 10px 10px 10px 10px; */
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+}
+
+.contanier-login{
+    color: rebeccapurple;
+    text-align: center;
+    font-weight: bold;
+}

@@ -1,9 +1,9 @@
 <?php
-/*session_start();
+session_start();
 if (!$_SESSION['validar']){
     header("location:ingreso");
     exit();
-}*/
+}
 include "views/modules/barra_menu.php";
 ?>
 <div class="main-panel">
@@ -17,13 +17,16 @@ include "views/modules/barra_menu.php";
                     Reigstrar un nuevo Usario
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">Registro de usuarios</h4>
+                       
                         <p class="card-text">Recuerda que es necesario llenar todos los campos</p>
-                        <a  class="btn btn-success" data-toggle="modal" data-target="#registroModal">Registrar</a>
+                        <a  class="btn btn-success" data-toggle="modal" data-target="#registroModal" style="color:white;">Registrar</a>
                         
                     </div>
                     <div class="card-footer text-muted">
-                        ultimo registro 2 days ago
+                        <?php
+                            $usuarios = new gestorUsuarios();
+                            $usuarios-> getFech(); 
+                        ?> 
                     </div>
                 </div>
             </div>
@@ -33,7 +36,6 @@ include "views/modules/barra_menu.php";
                     Reigstrar un nuevo Departamento
                     </div>
                     <div class="card-body">
-                        <h4 class="card-title">Registro de departamento</h4>
                         <p class="card-text">Recuerda que es necesario llenar todos los campos</p>
                         <a href="#0" class="btn btn-info">Registrar</a>
                     </div>
@@ -56,33 +58,20 @@ include "views/modules/barra_menu.php";
                             <thead>
                                 <tr>
                                     <th class="text-center">#</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
                                     <th>Usuario</th>
                                     <th>Departamento</th>
-                                    <th>Fecha de Registro</th>
+                                    <th>Categoria</th>
                                     <th class="text-right">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-        
-                                <tr>
-                               
-                                    <td class="text-center">2</td>
-                                    <td>John Doe</td>
-                                    <td>Design</td>
-                                    <td>2012</td>
-                                    <td class="text-right">&euro; 89,241</td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" class="btn btn-info btn-round">
-                                            <i class="material-icons">person</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" class="btn btn-success btn-round">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button type="button" rel="tooltip" class="btn btn-danger btn-round">
-                                            <i class="material-icons">close</i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php
+                                    $usuarios = new gestorUsuarios();
+                                    $usuarios->getUsuariosRegistrados(); 
+                                ?>
                             </tbody>
                         </table>
                     </div>
@@ -98,3 +87,4 @@ include "views/modules/barra_menu.php";
         
     </div>
 </div>
+ 

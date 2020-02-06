@@ -23,7 +23,7 @@ angular.module('app', ['datatables'])
         $("#containerFoto").css({"background":"white"});
     
          archivo = e.originalEvent.dataTransfer.files;
-        console.log(archivo);
+        
         // Creamos el objeto de la clase FileReader
         let reader = new FileReader();
 
@@ -53,24 +53,38 @@ angular.module('app', ['datatables'])
         /// Validar tamaño del aimagen
         var imagenSize = imagen.size;
         if (Number(imagenSize) > 2000000){ // Dos millones de Bits (2MB)
-            $('#containerFoto').before('<div class="alert alerta alert-danger">El archvio no tiene el peso correcto es mayor a 2MB</div>')
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo no tiene el peso correcto',
+                footer: '<a href="helpme">ayuda</a>'
+              })
         }
     
         else{
-            $(".alerta").remove();
+            
         }
     
          var imageType = imagen.type;
         if (imageType == "image/jpeg" || imageType  == "image/png"){
             $(".alerta").remove();
         }else{
-            $('#containerFoto').before('<div class="alert alerta alert-danger">El archvio debe ser JPG O PNG :(</div>')
-    
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'El archivo no es el correcto',
+                footer: '<a href="helpme">ayuda</a>'
+              })
         }
         $scope.FotodeUsuario = imagen;
     });
+    /*Expreciones regulares para validar los datos del formulario*/
+    function validarEmail(email){
+        var regex = /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(email); 
+        return regex;
+    }
     $scope.registrarUsuario = function(datos){
-        
+        var succes = false;
         var datosnuevoUsuario = new FormData();
         if(datos.mail == "" || datos.mail == null ||
         datos.nombre == "" || datos.nombre == null
@@ -82,44 +96,60 @@ angular.module('app', ['datatables'])
         || datos.depto == "" || datos.depto == null
         || datos.nivel == "" || datos.nivel == null){ // Metemos todo en un solo IF
             Swal.fire({
-                icon: 'success',
-                title: 'Oops...',
-                text: 'Debes de verificar los datos de tu formulario',
-                footer: '<a href>Soporte</a>'
-              })
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Los datos del formulario no estan completos',
+              footer: '<a href="helpme">ayuda</a>'
+            })
         }else{
-            datosnuevoUsuario.append('mail', datos.mail);
-            datosnuevoUsuario.append('nombre', datos.nombre);
-            datosnuevoUsuario.append('ap', datos.ap);
-            datosnuevoUsuario.append('am', datos.am);
-            datosnuevoUsuario.append('direccion', datos.direc);
-            datosnuevoUsuario.append('numero', datos.number);
-            datosnuevoUsuario.append('sex', datos.sex);
-            datosnuevoUsuario.append('depto', datos.depto);
-            datosnuevoUsuario.append('nivel', datos.nivel);
-            datosnuevoUsuario.append('foto', $scope.FotodeUsuario);
-        }
-
-        $.ajax({
-            url:"views/ajax/registroUsuario.php",
-            method: "POST",
-            data: datosnuevoUsuario,
-            cache: false,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success : function (response){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Listo',
-                    text: 'Registro Exitoso'
-                  })
-                  $('#registroModal').hide();
-                  window.location = 'adminusuarios';
+            if(validarEmail(datos.mail)){
+                  succes = true;
+            }else{
+                console.log("Email invalido");
             }
-            
-            
-        })
+            if(succes == true){
+                datosnuevoUsuario.append('mail', datos.mail);
+                datosnuevoUsuario.append('nombre', datos.nombre);
+                datosnuevoUsuario.append('ap', datos.ap);
+                datosnuevoUsuario.append('am', datos.am);
+                datosnuevoUsuario.append('direccion', datos.direc);
+                datosnuevoUsuario.append('numero', datos.number);
+                datosnuevoUsuario.append('sex', datos.sex);
+                datosnuevoUsuario.append('depto', datos.depto);
+                datosnuevoUsuario.append('nivel', datos.nivel);
+                datosnuevoUsuario.append('foto', $scope.FotodeUsuario);
+
+                $.ajax({
+                    url:"views/ajax/registroUsuario.php",
+                    method: "POST",
+                    data: datosnuevoUsuario,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success : function (response){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Listo',
+                            text: 'Registro Exitoso'
+                          })
+                          $('#registroModal').hide();
+                          setTimeout(function(){
+                            window.location = 'adminusuarios';
+                          }, 3000);
+                    }
+                    
+                    
+                })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Los datos del formulario no estan completos',
+                    footer: '<a href="helpme">ayuda</a>'
+                  })
+            }
+        }
 
         /*Obetner los datos del formulario*/
     }

@@ -48,10 +48,42 @@ class gestorUsuariosModel{
         }
     }
 
-   /* static public function getUsuarios($tabla){
-        $stmt = Conexion::contectar()->prepare("SELECT nombre_usuario, nivel_usuario, c
-        orreo (SELECT Nombre_departamento FROM cat_departamentos WHERE id = us.departamento ) as depto FROM $tabla as us");
-    }*/
+   static public function getUsuarios($tabla){
+        $stmt = Conexion::conectar()->prepare("SELECT 
+        us.Nombre,
+        us.ap,
+        us.am,
+        usu.nombre_usuario,
+        dep.Nombre_departamento,
+        niv.categoria
+        FROM $tabla us
+        LEFT JOIN usuarios usu ON usu.id_empleado = us.id
+        LEFT JOIN cat_departamentos as dep ON usu.departamento = dep.id
+        LEFT JOIN cat_niveles as niv ON niv.id = usu.nivel_usuario");
+        try{
+            
+            if($stmt->execute()){
+                return $stmt->fetchAll();
+            }else{
+                return false;
+            }
+        }catch( PDOException $Exception ) {
+           return false;
+        }
+    }
+    /*Obtener la ultima fecha de registro */
+    static public function getFechaRegistro($tabla){
+        $stmt = Conexion::conectar()->prepare("SELECT fecha_registro as ultimo FROM $tabla ORDER by fecha_registro desc limit 1");
+        try{
+            if($stmt->execute()){
+                return $stmt->fetchAll();
+            }else{
+                return false;
+            }
+        }catch(PDOException $Exception){
+            return false;
+        }
+    }
 }
 /* 	nombre_usuario	pass	nivel_usuario	correo	telefono	departamento	fecha_registro	intentos	fecha_ultimo_login	activo
 */

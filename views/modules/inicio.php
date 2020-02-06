@@ -1,9 +1,9 @@
 <?php
-/*session_start();
+session_start();
 if (!$_SESSION['validar']){
-    header("location:ingreso");
+    header("location:login");
     exit();
-}*/
+}
 include "views/modules/barra_menu.php";
 ?>
 <div class="main-panel">

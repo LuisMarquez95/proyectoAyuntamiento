@@ -1,4 +1,4 @@
-<html ng-app="app">
+<html>
     <head>
         <meta http-equiv="Content-type" content="text/html; charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,7 @@
         <!-- Estilos personalizados -->
         <link rel="stylesheet" href="views/assets/css/myStyle.css">
     </head>
-    <body class="" ng-controller="ayuntApp">
+    <body>
         <div class="wrapper">
             <?php
             $ayuntamientoCMS = new AyuntamientoEnlaces();
@@ -22,6 +22,7 @@
         </div>
     </body>
     <!-- Bootstrap 4-->
+    
     <!--   Core JS Files   -->
   <script src="views/assets/js/core/jquery.min.js"></script>
   <script src="views/assets/js/core/jquery-ui.js"></script>
@@ -31,9 +32,8 @@
   <!-- Plugin for the momentJs  -->
   <script src="views/assets/js/plugins/moment.min.js"></script>
   <!--  Plugin for Sweet Alert -->
-  <script src="views/assets/js/plugins/sweetalert2.js"></script>
-  <!-- Forms Validations Plugin -->
-  <script src="views/assets/js/plugins/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  
   <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
   <script src="views/assets/js/plugins/jquery.bootstrap-wizard.js"></script>
   <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
@@ -70,9 +70,12 @@
 
     });
   </script>
-  <!-- Angular -->
-  <script src="views/assets/js/jquery-dataTables.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
-  <script src="views/assets/js/angular-datatables.min.js"></script>
-  <script src="views/assets/js/angularController.js"></script>
+ 
+
+  <!-- Menu selector -->
+  <script src="views/assets/js/menuSelector.js"></script>
+  <!-- Validar Ingresos -->
+  <script src="views/assets/js/validarIngreos.js"></script>
+  <!-- JS RegistroUsuarios -->
+  <script src="views/assets/js/registroUusarios.js"></script>
 </html>

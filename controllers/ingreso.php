@@ -1,107 +1,91 @@
 <?php 
-/*Debemos especificar la zona horaria*/
 date_default_timezone_set('America/Mexico_City');
-class IngresoSystema{
-    /*Funcion de ingreso al panel de control*/
-    public function IngresoController(){
+class IngresoAyuntmiento{
+    public function ingresoControllerr(){
         $user = false;
         $password = false;
         $ingreso = false;
         $maximoIntentos = 3;
-        if(isset($_POST['usuarioIngreso'])){
-            /*Verificar el usuario que venga sin caracteres especiales*/
-            if(preg_match('/^[a-zA-Z0-9]+$/', $_POST['usuarioIngreso'])){
+        $intentosDos = 0;
+        if(isset($_POST['userInput'])){
+            /*Verificar el usuario */
+            if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['userInput'])){
                 $user = true;
             }else{
                 $user = false;
             }
-
-            /* Verificar que la contraseña venga sin caracteres especiales */
-            if(preg_match('/^[a-zA-Z0-9]+$/', $_POST['passwordIngreso'])){
+            /*Verificar que la contraseña venga sin caracteres especiales */
+            if(preg_match('/^[a-zA-Z0-9]+$/',$_POST['passInput'])){
                 $password = true;
             }else{
                 $password = false;
             }
-
-            /* Si todo sale bien las validaciones puede pasar
-                al siguiente nivel
-             */ 
+            /* Si los dos parametros son validos pasa al segundo proceso*/
             if($user == true && $password == true){
-                
-                /* Arreglo de datos del usuario*/
+                // $passWord = crypt($_POST['passwordIngreso'], '$5$rounds=5000$usesomesillystringforsalt$');
                 $datosController = Array(
-                    "usuario" => $_POST['usuarioIngreso'],
-                    "pass" => $_POST['passwordIngreso']
+                    "usuario" =>  $_POST['userInput'],
+                    "pass" =>  $_POST['passInput']
                 );
-
+                /*Revisar que el usuario Existe*/
                 $respuesta_usuario = IngresoSistemaModel::revisarModel($datosController, 'usuarios');
-                /*Trae los intentos que ha hecho el usuario por ingresar al sistema*/
-                $respuesta = IngresoSistemaModel::getIntentosModel($datosController, 'usuarios');
-                $intentos = $respuesta['intentos']; // Igualamos la variable de intentos para poder ser utilizada
-                if(empty($respuesta_usuario)){ // Si el arreglo de respuesta usuario esta vacio quiere decir que no existe el usuario que intenta ingresar
-                    $ingreso = false;
-                    echo "<br><div class=\"alert alert-danger\" role=\"alert\">No hemos podido encontrar el usuario que nos solicitas</div>";
-                } 
-                /*En el caso contrario entra en esta sección*/
-                else{
-                    $respuesta_usuarioPass = IngresoSistemaModel::revisarPassModel($datosController, 'usuarios');
-                    if($respuesta_usuarioPass == true){
-                        $ingreso = true;
-                    }else{
-                        $intentos ++;
-                        $datosController = Array(
-                            "usuario" => $_POST['usuarioIngreso'],
-                            "intentos" => $intentos
-                        );
-                        /*En caso de ser incorrecta la contraseña ingresa un intento fallido*/
-                        IngresoSistemaModel::intentosModel($datosController, 'usuarios');
-                        echo "<br><div class=\"alert alert-danger\" role=\"alert\">El password que ingresas no es el correcto</div>";
-                        if($intentos == 3){
-                            $intentos = 0;
-                            $datosController = Array(
-                                "usuario" =>  $_POST['usuarioIngreso'],
-                                "intentos" =>  $intentos
-                            );
-                           
-                            IngresoSistemaModel::intentosModel($datosController, 'users');
-                            header('location:404'); // Aquí debe ir el captcha
-                        }
-
-                    }
-                }  
-                if($ingreso == true){
-                    /*Otener los datos necesarios del inicio de sesión */
-                    $respuesta = IngresoSistemaModel::ingresoModel($datosController, 'usuarios');
-                    if($respuesta == false){
-                        echo "<br><div class=\"alert alert-danger\" role=\"alert\">No existen datos para el inicio de seción contacta con soporte</div>";
-                    }else{
-                        if($respuesta['usuario'] == $_POST['usuarioIngreso'] && $respuesta['pass'] == $_POST['passwordIngreso'] && $intentos < $maximoIntentos){
-                            $intentos = 0;
-                            $datosController = Array(
-                                "usuario" =>  $_POST['usuarioIngreso'],
-                                "intentos" =>  $intentos
-                            );
-                           
-                            IngresoSistemaModel::intentosModel($datosController, 'usuarios');
-                            /*Si inicia seción se registra en un log el usuario que ingreso; */
-                            $res_login = IngresoSistemaModel::logModel($datosController, 'usuarios');
-                            /*Iniciar variables de seción */
-                            session_start();
-                            $_SESSION['validar'] = true;
-                            $_SESSION['usuario'] = $respuesta['nombre']. '-' . $respuesta['ap'];
-                            $_SESSION['id'] = $respuesta['id'];
-                            $_SESSION['foto'] = $respuesta['foto'];
-                            $_SESSION['email'] = $respuesta['correo'];
-                            $_SESSION['rol'] = $respuesta['rol'];
-                            header("location:inicio");
-
+                if($respuesta_usuario){
+                    /*Trae los intentos del usuario que ingresa*/
+                    $intentos = IngresoSistemaModel::getIntentosModel($datosController, 'usuarios');
+                    $intentosDos = $intentos['intentos'];
+                    if($intentos['intentos'] <= 2){
+                        /*Verificar el password*/
+                        $verificar_pass =  IngresoSistemaModel::revisarPassModel($datosController, 'usuarios');
+                        if($verificar_pass){
+                            $ingreso = true;
                         }else{
-                            echo "<br><div class=\"alert alert-danger\" role=\"alert\">Por favor revisa tu ingreso</div>"; 
+                            $intentosDos ++;
+                            $datosController = Array(
+                                "usuario" =>  $_POST['userInput'],
+                                "intentos" =>  $intentosDos
+                            );
+                            IngresoSistemaModel::intentosModel($datosController, 'usuarios');
+                            echo "<br><div class=\"alert alert-danger\" role=\"alert\">La contraseña es incorrecta</div>";
+                            /*Si los intentos exeden de 3*/
+                            if($intentosDos == 3){
+                                echo "<br><div class=\"alert alert-danger\" role=\"alert\">El usuario sera desactivado</div>";
+                                $intentosDos = 0;
+                                $datosController = Array(
+                                    "usuario" =>  $_POST['userInput'],
+                                    "intentos" =>  $intentosDos
+                                );
+                                IngresoSistemaModel::intentosModel($datosController, 'usuarios');
+                                header('location:404'); // Aquí debe ir el captcha
+                            }
                         }
+                    }else{
+                        echo "<br><div class=\"alert alert-danger\" role=\"alert\">Este usuario exedio el numero de intentos</div>";
                     }
-                }                                      
+                }else{
+                    echo "<br><div class=\"alert alert-danger\" role=\"alert\">El usuario no existe</div>";
+                }
+            }else{
+                echo "<br><div class=\"alert alert-danger\" role=\"alert\">El usuario o Contraseñas contienen caracteres no perminitos</div>";
             }
 
+            if($ingreso){
+                $datosController = Array(
+                    "usuario" =>  $_POST['userInput'],
+                    "pass" =>  $_POST['passInput']
+                );
+                $respuesta = IngresoSistemaModel::ingresoModel($datosController, 'usuarios');
+               
+                /*Si inicia seción se registra en un log el usuario que ingreso; */
+                IngresoSistemaModel::logModel($datosController, 'usuarios');
+                /*Iniciar variables de seción */
+                session_start();
+                $_SESSION['validar'] = true;
+                $_SESSION['user'] = $respuesta['Nombre'];
+                $_SESSION['nivel'] = $respuesta['nivel'];
+                $_SESSION['foto'] = $respuesta['foto'];
+                $_SESSION['depto'] = $respuesta['depto'];
+                header("location:inicio");
+            }
         }
     }
 }

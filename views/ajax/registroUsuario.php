@@ -46,7 +46,11 @@ if(isset($_POST['nombre'])){
     $a -> sexo = $_POST['sex'];
     $a -> direccion = $_POST['direccion'];
     $a -> nivel = $_POST['nivel'];
-    $a -> foto = $_FILES['foto']['tmp_name'];
+    if(isset($_FILES['foto']['tmp_name'])){
+        $a -> foto = $_FILES['foto']['tmp_name'];
+    }else{
+        $a -> foto = null;
+    }
     $a -> registarUsuario();
 
 }

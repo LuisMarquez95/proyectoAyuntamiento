@@ -5,6 +5,7 @@ class AyuntamientoEnlacesModel{
             $enlaces == 'login' ||
             $enlaces == 'salir' ||
             $enlaces == 'grupos' ||
+            $enlaces == '404' ||
             $enlaces == 'adminusuarios'
         ){
             $module = "views/modules/".$enlaces.".php";
